@@ -6,8 +6,6 @@ resource "azurerm_virtual_network" "vn" {
 }
 
 
-
-
 resource "azurerm_subnet" "infrastructure" {
   name                 = "testsparkaks-subnet"
   virtual_network_name = azurerm_virtual_network.vn.name
@@ -129,4 +127,3 @@ resource "azurerm_subnet_network_security_group_association" "infra-association"
   subnet_id                 = azurerm_subnet.infrastructure.id
   network_security_group_id = azurerm_network_security_group.infra_sec_group.id
 }
-

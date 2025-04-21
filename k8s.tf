@@ -1,4 +1,3 @@
-
 resource "azurerm_container_registry" "acr" {
   name                = "testsparkakscontainerregistry"
   resource_group_name = azurerm_resource_group.rg.name
@@ -6,6 +5,7 @@ resource "azurerm_container_registry" "acr" {
   sku                 = "Basic"
   admin_enabled       = true
 }
+
 
 resource "azurerm_kubernetes_cluster" "prod-k8s" {
   location            = azurerm_resource_group.rg.location
@@ -23,14 +23,6 @@ resource "azurerm_kubernetes_cluster" "prod-k8s" {
     vm_size                     = "Standard_DS2_v2"
     node_count                  = 3
     vnet_subnet_id              = azurerm_subnet.infrastructure.id
-  }
-
-  linux_profile {
-    admin_username = "azure"
-
-    ssh_key {
-      key_data = file("~/.ssh/id_rsa.pub")
-    }
   }
 
   auto_scaler_profile {
