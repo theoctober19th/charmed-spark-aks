@@ -1,18 +1,10 @@
-resource "azurerm_container_registry" "acr" {
-  name                = "testsparkakscontainerregistry"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  sku                 = "Basic"
-  admin_enabled       = true
-}
-
 
 resource "azurerm_kubernetes_cluster" "prod-k8s" {
   location            = azurerm_resource_group.rg.location
-  name                = "TestAKSCluster"
+  name                = var.cluster_name
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = "testaksclusterprefix"
-  kubernetes_version  = "1.29.9"
+  kubernetes_version  = "1.31.7"
 
   identity {
     type = "SystemAssigned"
@@ -21,7 +13,7 @@ resource "azurerm_kubernetes_cluster" "prod-k8s" {
   default_node_pool {
     name                        = "default"
     vm_size                     = "Standard_DS2_v2"
-    node_count                  = 3
+    node_count                  = var.num_nodes
     vnet_subnet_id              = azurerm_subnet.infrastructure.id
   }
 
